@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { getAnimeSeasonSearch } from '../service/Api'
+import { getAnimeSeason } from '../service/Api'
 import { useParams } from 'react-router-dom';
 import Nav from "../components/Nav";
 import AnimeCard from './AnimeCard';
 import BeatLoader  from "react-spinners/BeatLoader";
 
-
-const AnimeCateigoria = () => {
-  const {id, name} = useParams(); 
+const AnimeTemporada = () => {
+  const {year, season} = useParams();
   const [animeData, setAnimeData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  
+
   useEffect(() => {
     const fetchAnimeData = async () => {
       try {
-        const response = await getAnimeSeasonSearch(id, currentPage);
+        const response = await getAnimeSeason(year,season, currentPage);
         const { data, pagination } = response;
 
         setAnimeData(data);
@@ -29,8 +28,8 @@ const AnimeCateigoria = () => {
     };
 
     fetchAnimeData();
-  }, [id, currentPage]);
-    
+  }, [year,season, currentPage]);
+ 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage((prevPage) => prevPage + 1);
@@ -46,7 +45,7 @@ const AnimeCateigoria = () => {
     <>
       <Nav/>
       <div className='mx-5 my-10'>
-        <h2 className='text-2xl font-bold mb-8'>{name}</h2>
+        <h2 className='text-2xl font-bold mb-8'>{season}</h2>
         {loading ? (
           <div className='flex h-full justify-center items-center'>
             <BeatLoader color="#35799F" size="50"/>
@@ -54,8 +53,8 @@ const AnimeCateigoria = () => {
         ) : (
           <>
           <div className='flex flex-wrap justify-between'>
-              {animeData.map((anime) => (
-                <AnimeCard anime={anime}></AnimeCard>
+              {animeData && animeData.map((anime) => (
+                <AnimeCard key={anime.id} anime={anime}></AnimeCard>
               ))}
           </div>
           <div className="flex justify-between mt-4">
@@ -75,7 +74,6 @@ const AnimeCateigoria = () => {
               Próxima Página
             </button>
           </div>
-          
           </>
         )}
       </div>
@@ -83,4 +81,4 @@ const AnimeCateigoria = () => {
   );
 };
 
-export default AnimeCateigoria;
+export default AnimeTemporada;

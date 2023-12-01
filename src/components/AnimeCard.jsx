@@ -14,13 +14,17 @@ const AnimeCard = (props) => {
   };
 
   return (
-        <Link to={`/anime/${anime.mal_id}`} className='w-[26.5rem] mb-4'>
+        <Link to={`/anime/${anime.mal_id}`} className='lg:w-[26.5rem] md:w-[26.5rem] w-full mb-4'>
         <div className='bg-[#35799F]'>
             <p className='text-center text-white font-normal text-xl truncate py-1'>{anime.title}</p>
         </div>
         <div className='flex bg-[#EDEDED]'>
-            <img className='object-fill' src={anime.images.webp.image_url} alt="" width="200" height="280"/>
+            <div className='w-1/2'>
+            <img className='' src={anime.images.webp.image_url} alt=""/>
+            </div>
+            <div className='w-1/2'>
             <p className='text-justify mx-1 text-black'>{limitarSinopse(anime.synopsis, 280)}</p>
+            </div>
         </div>
         <div className='flex justify-around bg-[#888787] text-white items-center py-1'>
             <div className='flex space-x-2 h-5 items-center'>

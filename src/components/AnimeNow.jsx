@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAnimeSeasonData } from '../service/Api'
+import { getAnimeData } from '../service/Api'
 import Nav from "../components/Nav";
 import AnimeCard from './AnimeCard';
 import BeatLoader  from "react-spinners/BeatLoader";
@@ -12,7 +12,8 @@ const AnimeSeason = () => {
   useEffect(() => {
     const fetchAnimeData = async () => {
       try {
-        const data = await getAnimeSeasonData();
+        const path = "top/anime";
+        const data = await getAnimeData(path);
         setAnimeData(data);
         setLoading(false);
       } catch (error) {
@@ -26,7 +27,7 @@ const AnimeSeason = () => {
   return (
     <>
     <Nav/>
-    <div className='mx-5 my-10 h-96'>
+    <div className='mx-5 my-10 h-96 '>
       <h2 className='text-2xl font-bold mb-8'>Mais Assistidos</h2>
       {loading ? (
         <div className='flex h-full justify-center items-center'>

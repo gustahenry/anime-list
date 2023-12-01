@@ -1,7 +1,7 @@
 import Nav from "../Nav";
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
-import { getAnimeSeasonId } from '../../service/Api'
+import { getAnimeData } from '../../service/Api'
 import InfoCard from "./InfoCard";
 import InfoHead from "./InfoHead";
 
@@ -14,7 +14,9 @@ const AnimeDetail = () => {
   useEffect(() => {
     const fetchAnimeData = async () => {
       try {
-        const data = await getAnimeSeasonId(id);
+        const path = "anime/"+id+"/full";
+        console.log(path);
+        const data = await getAnimeData(path);
         setAnimeData(data);
         setLoading(false);
       } catch (error) {

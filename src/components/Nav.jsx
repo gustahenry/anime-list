@@ -1,6 +1,6 @@
 import { useState, useEffect} from "react";
 import Logo from "../assets/AnimeList.png";
-import { getAnimeSeasonCategories } from '../service/Api';
+import { getAnimeData } from '../service/Api';
 import { Link } from "react-router-dom";
 
 const Nav = () => {
@@ -10,7 +10,8 @@ const Nav = () => {
 
     useEffect(() => {
         const fetchAnimeCategories = async () => {
-            const data = await getAnimeSeasonCategories();
+            const path = "genres/anime";
+            const data = await getAnimeData(path);
             setAnimeCategories(data);
         };
     
@@ -22,8 +23,11 @@ const Nav = () => {
         <Link to="/" className="w-44 h-12 flex items-center">
             <img src={Logo} alt=""/>
         </Link>
-        <ul className="text-white font-semibold text-lg">
-            
+        <ul className="text-white font-semibold text-lg flex space-x-8">
+            <Link to={`/temporada/2023/winter`}><li>Inverno</li></Link>
+            <Link to={`/temporada/2023/spring`}><li>Primavera</li></Link>
+            <Link to={`/temporada/2023/summer`}><li>Verão</li></Link>
+            <Link to={`/temporada/2023/fall`}><li>Outono</li></Link>
         </ul>
         <button className="text-white font-semibold text-lg" onClick={()=>{setToggle(!toggle)}}>Categorias</button>
         {toggle && (
